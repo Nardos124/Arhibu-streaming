@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arhibu Streaming</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<style>
+/* ✅ Your CSS exactly the same — nothing changed */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: ghostwhite;
+  color: white;
+  overflow-x: hidden;
+  transition: background-color 0.3s, color 0.3s;
+}
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 180px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: rgba(255,255,255,0.2);
+  z-index: 1000;
+  border-bottom-right-radius: 20px;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+}
+.header-logo {
+  font-family: Raleway;
+  font-size: 2.5rem;
+  color: darkgoldenrod;
+  margin-right: 15px;
+}
+.icon {
+  font-size: 2rem;
+  cursor: pointer;
+  margin-left: 15px;
+  color: darkgoldenrod;
+}
+.search-bar {
+  width: 0;
+  opacity: 0;
+  padding: 5px 10px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: none;
+  margin-left: 10px;
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+.search-bar.show {
+  width: 250px;
+  opacity: 1;
+}
+.featured-row {
+  width: 65vw;
+  height: 70vh;
+  margin: 100px auto 40px auto;
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.featured-row img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.featured-row:hover img {
+  transform: scale(1.02);
+}
+.featured-row::before {
+  content: "ARHIBU";
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 2rem;
+  color: darkgoldenrod;
+  background-color: rgba(255,255,255,0.7);
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+.featured-title {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-size: 1.5rem;
+  background-color: rgba(0,0,0,0.5);
+  padding: 8px 15px;
+  border-radius: 10px;
+  color: white;
+}
+.movie-row {
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding: 20px;
+  scroll-behavior: smooth;
+}
+.movie-row::-webkit-scrollbar {
+  height: 10px;
+}
+.movie-row::-webkit-scrollbar-thumb {
+  background: darkgoldenrod;
+  border-radius: 5px;
+}
+.movie-card {
+  flex: 0 0 auto;
+  width: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s;
+  height:30vh;
+}
+.movie-card img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s;
+}
+.movie-card:hover img {
+  transform: scale(1.05);
+}
+.movie-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  padding: 10px;
+  color: white;
+  border-radius: 0 0 10px 10px;
+}
+.movie-info h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+.stars {
+  color: gold;
+}
+.sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(255,255,255,0.2);
+  padding: 20px 0;
+  border-radius: 10px 0 0 10px;
+}
+.sidebar a {
+  color: darkgoldenrod;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-align: center;
+  width: 90%;
+  transition: background-color 0.3s, transform 0.3s;
+}
+.sidebar a:hover {
+  background-color: rgba(218,165,32,0.3);
+  transform: scale(1.05);
+}
+body.dark-mode {
+  background-color: #121212;
+  color: ghostwhite;
+}
+body.dark-mode .sidebar {
+  background-color: rgba(255,255,255,0.1);
+}
+body.dark-mode .featured-row::before {
+  background-color: rgba(51,51,51,0.7);
+}
+body.dark-mode .movie-info {
+  background: rgba(0,0,0,0.7);
+}
+@media (max-width: 900px) {
+  .movie-card { width: 200px; }
+  .featured-row { width: 90vw; height: 50vh; margin-top: 80px; }
+  .sidebar { display: none; }
+}
+</style>
+</head>
+<body class="dark-mode">
+
+<div class="header">
+  <div class="header-left">
+    <div class="header-logo">ARHIBU</div>
+    <input type="text" class="search-bar" placeholder="Search movies..." id="searchInput">
+  </div>
+  <div>
+    <span class="icon" id="searchIcon">&#128269;</span>
+    <span class="icon" id="darkModeIcon">&#9788;</span>
+  </div>
+</div>
+
+<div class="featured-row" id="featured1">
+  <img src="" alt="Featured Movie">
+  <div class="featured-title"></div>
+</div>
+
+<div class="movie-row" id="row2"></div>
+
+<div class="sidebar">
+  <a href="#">Horror</a>
+  <a href="#">Romance</a>
+  <a href="#">Action</a>
+  <a href="#">Comedy</a>
+  <a href="#">Sci-Fi</a>
+  <a href="#">Documentary</a>
+  <a href="#">Drama</a>
+</div>
+
+<script>
+// ✅ Dark mode toggle
+document.getElementById('darkModeIcon').addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+});
+
+// ✅ Search toggle
+const searchIcon = document.getElementById('searchIcon');
+const searchInput = document.getElementById('searchInput');
+searchIcon.addEventListener('click', () => {
+  searchInput.classList.toggle('show');
+  if (searchInput.classList.contains('show')) searchInput.focus();
+});
+
+// ✅ TMDB V4 Token Authorization
+const AUTH = process.env.TMDB_AUTH; // read from environment
+
+const BASE_URL = "https://api.themoviedb.org/3";
+const IMG_BASE = "https://image.tmdb.org/t/p/w500";
+const FALLBACK = "https://via.placeholder.com/500x750?text=No+Image";
+
+// ✅ Unified fetch request
+async function fetchMovies(url) {
+  const res = await fetch(url, {
+    headers: {
+      accept: "application/json",
+      Authorization: AUTH
+    }
+  });
+  const data = await res.json();
+  return data.results || [];
+}
+
+async function fetchTrailer(id) {
+  const res = await fetch(`${BASE_URL}/movie/${id}/videos?language=en-US`, {
+    headers: {
+      accept: "application/json",
+      Authorization: AUTH
+    }
+  });
+  const data = await res.json();
+  const trailer = data.results?.find(v => v.type === "Trailer" && v.site === "YouTube");
+  return trailer ? trailer.key : null;
+}
+
+function clearMovies() {
+  document.getElementById('row2').innerHTML = '';
+}
+
+function createMovieCard(movie) {
+  const stars = Math.round(movie.vote_average / 2);
+  const imgSrc = movie.poster_path ? IMG_BASE + movie.poster_path : FALLBACK;
+  const div = document.createElement('div');
+  div.className = 'movie-card';
+  div.innerHTML = `
+    <img src="${imgSrc}" alt="${movie.title}">
+    <div class="movie-info">
+      <h3>${movie.title}</h3>
+      <div class="stars">${'⭐'.repeat(stars)}</div>
+    </div>
+  `;
+  div.onclick = async () => {
+    const key = await fetchTrailer(movie.id);
+    if (key) window.open(`https://www.youtube.com/watch?v=${key}`, "_blank");
+  };
+  return div;
+}
+
+async function displayMovies(url) {
+  const movies = await fetchMovies(url);
+  if (!movies.length) return;
+
+  // ✅ Featured image
+  const backdrop = movies[0].backdrop_path ? IMG_BASE + movies[0].backdrop_path : FALLBACK;
+  const featured1 = document.getElementById('featured1');
+  featured1.querySelector('img').src = backdrop;
+  featured1.querySelector('.featured-title').textContent = movies[0].title;
+  featured1.onclick = async () => {
+    const key = await fetchTrailer(movies[0].id);
+    if (key) window.open(`https://www.youtube.com/watch?v=${key}`, "_blank");
+  };
+
+  clearMovies();
+  const row = document.getElementById('row2');
+  movies.slice(1, 10).forEach(movie => row.appendChild(createMovieCard(movie)));
+}
+
+// ✅ Genres
+const genreMap = {
+  "Horror": 27,
+  "Romance": 10749,
+  "Action": 28,
+  "Comedy": 35,
+  "Sci-Fi": 878,
+  "Documentary": 99,
+  "Drama": 18
+};
+
+document.querySelectorAll('.sidebar a').forEach(link => {
+  link.onclick = e => {
+    e.preventDefault();
+    const id = genreMap[e.target.textContent.trim()];
+    if (id) {
+      displayMovies(`${BASE_URL}/discover/movie?with_genres=${id}&sort_by=popularity.desc&page=1`);
+    }
+  };
+});
+
+// ✅ Search
+searchInput.addEventListener('keypress', e => {
+  if (e.key === 'Enter') {
+    const q = searchInput.value.trim();
+    if (q) {
+      displayMovies(`${BASE_URL}/search/movie?query=${encodeURIComponent(q)}&page=1`);
+    }
+  }
+});
+
+// ✅ Load Popular Movies on Start
+displayMovies(`${BASE_URL}/movie/popular?language=en-US&page=1`);
+</script>
+
+</body>
+</html>
