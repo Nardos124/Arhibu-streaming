@@ -18,8 +18,8 @@ Arhibu Streaming is a **movie streaming frontend** built with **HTML, CSS, and J
 
 ## Screenshots
 
-![Featured Movie](https://via.placeholder.com/500x281?text=Featured+Movie)
-![Movie Cards](https://via.placeholder.com/300x450?text=Movie+Cards)
+![Featured Movie](/images/ArhibuStreaming.png)
+
 
 ---
 
@@ -36,3 +36,4 @@ You can view the live project on GitHub Pages:
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+
