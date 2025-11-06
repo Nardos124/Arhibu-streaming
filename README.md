@@ -26,7 +26,7 @@ Arhibu Streaming is a **movie streaming frontend** built with **HTML, CSS, and J
 ## Demo
 
 You can view the live project on GitHub Pages:  
-[**Arhibu Streaming Live**](https://YOUR_USERNAME.github.io/YOUR_REPOSITORY/)
+[**Arhibu Streaming Live**](https://Nardos124.github.io/Arhibu-Streaming/)
 
 ---
 
@@ -35,7 +35,8 @@ You can view the live project on GitHub Pages:
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+git clone https://github.com/Nardos124/Arhibu-Streaming.git
+
 
 
 
