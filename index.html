@@ -241,33 +241,21 @@ searchIcon.addEventListener('click', () => {
   if (searchInput.classList.contains('show')) searchInput.focus();
 });
 
-// ✅ TMDB V4 Token Authorization
-const AUTH = "40391f0068814d89b164156ba4fc816f"; // replace with your token
- // read from environment
-
+// ✅ TMDB V3 API Key
 const BASE_URL = "https://api.themoviedb.org/3";
+const API_KEY = "YOUR_V3_KEY_HERE"; // replace with your V3 key
 const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 const FALLBACK = "https://via.placeholder.com/500x750?text=No+Image";
 
 // ✅ Unified fetch request
 async function fetchMovies(url) {
-  const res = await fetch(url, {
-    headers: {
-      accept: "application/json",
-      Authorization: AUTH
-    }
-  });
+  const res = await fetch(`${url}&api_key=${API_KEY}`);
   const data = await res.json();
   return data.results || [];
 }
 
 async function fetchTrailer(id) {
-  const res = await fetch(`${BASE_URL}/movie/${id}/videos?language=en-US`, {
-    headers: {
-      accept: "application/json",
-      Authorization: AUTH
-    }
-  });
+  const res = await fetch(`${BASE_URL}/movie/${id}/videos?language=en-US&api_key=${API_KEY}`);
   const data = await res.json();
   const trailer = data.results?.find(v => v.type === "Trailer" && v.site === "YouTube");
   return trailer ? trailer.key : null;
@@ -300,7 +288,6 @@ async function displayMovies(url) {
   const movies = await fetchMovies(url);
   if (!movies.length) return;
 
-  // ✅ Featured image
   const backdrop = movies[0].backdrop_path ? IMG_BASE + movies[0].backdrop_path : FALLBACK;
   const featured1 = document.getElementById('featured1');
   featured1.querySelector('img').src = backdrop;
@@ -352,5 +339,3 @@ displayMovies(`${BASE_URL}/movie/popular?language=en-US&page=1`);
 
 </body>
 </html>
-
-
